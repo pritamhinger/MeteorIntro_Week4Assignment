@@ -37,7 +37,7 @@
 		  </div>
 		    <div class="form-group">
 		    <label for="description">Description</label>
-		    <input type="text" class="form-control" id="description" placeholder="I found this site really useful for ..." required="true">
+		    <input type="text" class="form-control" id="description" placeholder="I found this site really useful for ...">
 		  </div>
 
 		  <button type="submit" class="btn btn-default">Submit</button>
@@ -60,6 +60,9 @@
 	<a target="_blank"  href="{{url}}">{{title}}</a>
 	<p>
 		{{description}}
+	</p>
+	<p>
+		Votes Count : {{votes}}
 	</p>
 	<a href="#" class="btn btn-default js-upvote">
 		<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
