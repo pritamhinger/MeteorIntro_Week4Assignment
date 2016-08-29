@@ -79,7 +79,7 @@
 		<b>Website added On :</b> {{createdOn}}
 	</p>
 	<p>
-		<a href="/website/{{_id}}" class="btn btn-success">View Details</a>
+		<a href="/website/{{_id}}" class="btn btn-success js-view-website-details">View Details</a>
 	</p>
 	<a href="#" class="btn btn-default js-upvote">
 		<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
@@ -92,8 +92,8 @@
 </template>
 <template name="websiteDetail">
 	<div class="container">
-		<form>
-  		<div class="form-group">    		
+		<form class="js-post-website-comment">
+  			<div class="form-group">    		
     		<h1><a href="{{url}}">{{title}}</a></h1>
   		</div>
   		<div class="form-group">
@@ -118,10 +118,20 @@
 		    <label for="comment">Add your comment:</label>
 		    <textarea class="form-control" rows="3" id="comment" placeholder="Add your comment here...." required="true"></textarea>
 		 </div>
-  		<div class="form-group center-block">
-  			<label>Comments Section</label>
-  		</div>
   		<button type="submit" class="btn btn-default">Submit</button>
-	</form>
+		</form>
+		<div>
+			{{> comment_list}}
+		</div>
 	</div>
+</template>
+<template name="comment_list">
+	<ol>
+		{{#each allcomments}}
+			<div class="container">
+				<h3>{{comment}}</h3>
+				<h6><span>Comment Posted on:</span> <span class="date">{{createdOn}}</span></h6>
+			</div>
+		{{/each}}
+	</ol>
 </template>

@@ -35,6 +35,16 @@ Template.website_list.helpers({
 	}
 });
 
+Template.comment_list.helpers({
+	allcomments:function(){
+		if(Session.get("website_id")){
+			var websiteId = Session.get("website_id")
+			console.log("Searching comments for Website : " + websiteId)
+			return Comments.find({website_id:websiteId},{sort:{createdOn:-1}});
+			//return Comments.find();
+		}
+	}
+});
 
 /////
 // template events 
@@ -61,8 +71,37 @@ Template.website_item.events({
 		Websites.update({_id:website_id}, 
                 {$inc: {downVotes:1}});
 		return false;// prevent the button from reloading the page
+	},
+	"click .js-view-website-details":function(event){
+		var website_id = this._id;
+		console.log("Setting session to website id : " + website_id);
+		Session.set("website_id", this._id);
 	}
 })
+
+Template.websiteDetail.events({
+	"submit .js-post-website-comment":function(event){
+		var comment = event.target.comment.value
+		console.log("Comment is " + comment);
+
+		if(Meteor.user()){
+			var parts = location.href.split('/')
+			var websiteId = parts.pop()
+			console.log("Website id is : " + websiteId);
+
+			Comments.insert({
+				comment:comment,
+				website_id: websiteId,
+				createdOn:new Date()
+			});
+		}
+		else{
+			alert("User must be logged in to post a comment");	
+		}
+
+		return false;
+	}
+});
 
 Template.website_form.events({
 	"click .js-toggle-website-form":function(event){
@@ -82,10 +121,10 @@ Template.website_form.events({
     			upVotes:0,
     			downVotes:0,
     			createdOn:new Date()
-    	});
+    		});
 		}
 		else{
-			alert("Login Required");	
+			alert("User must be logged in to add a new website.");	
 		}
 		return false;// stop the form submit from reloading the page
 
