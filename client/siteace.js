@@ -6,7 +6,7 @@
 // helper function that returns all available websites
 Template.website_list.helpers({
 	websites:function(){
-		return Websites.find({},{sort:{votes:-1}});
+		return Websites.find({},{sort:{upVotes:-1,createdOn:-1}});
 	}
 });
 
@@ -23,7 +23,7 @@ Template.website_item.events({
 		console.log("Up voting website with id "+website_id);
 		// put the code in here to add a vote to a website!
 		Websites.update({_id:website_id}, 
-                {$inc: {votes:1}});
+                {$inc: {upVotes:1}});
 		return false;// prevent the button from reloading the page
 	}, 
 	"click .js-downvote":function(event){
@@ -34,7 +34,7 @@ Template.website_item.events({
 
 		// put the code in here to remove a vote from a website!
 		Websites.update({_id:website_id}, 
-                {$inc: {votes:-1}});
+                {$inc: {downVotes:1}});
 		return false;// prevent the button from reloading the page
 	}
 })
@@ -50,11 +50,12 @@ Template.website_form.events({
 
 		//  put your website saving code in here!	
 		if(Meteor.user()){
-			alert("Logged In");
 			Websites.insert({
     			title:event.target.title.value, 
     			url:event.target.url.value, 
     			description:event.target.description.value, 
+    			upVotes:0,
+    			downVotes:0,
     			createdOn:new Date()
     	});
 		}
