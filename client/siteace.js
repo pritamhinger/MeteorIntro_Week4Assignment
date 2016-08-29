@@ -3,6 +3,31 @@
 // template helpers 
 /////
 
+Router.configure({
+  layoutTemplate: 'ApplicationLayout'
+});
+
+Router.route('/', function () {
+  this.render('main', {
+    to:"main"
+  });
+  this.render('navbar', {
+    to:"navbar"
+  });
+});
+
+Router.route('/website/:_id', function () {
+  this.render('navbar', {
+    to:"navbar"
+  });
+  this.render('websiteDetail', {
+    to:"main", 
+    data:function(){
+      return Websites.findOne({_id:this.params._id});
+    }
+  });
+});
+
 // helper function that returns all available websites
 Template.website_list.helpers({
 	websites:function(){
