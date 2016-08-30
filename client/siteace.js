@@ -106,7 +106,49 @@ Template.websiteDetail.events({
 Template.website_form.events({
 	"click .js-toggle-website-form":function(event){
 		$("#website_form").toggle('slow');
-	}, 
+	},
+	"click .js-fetch-website-metadata" :function(event){
+		var url = $("#url").val();
+		console.log("URL is : " + url);
+		if(url === ""){
+			alert("Enter a URL");
+			return;
+		}
+
+		// var result = HTTP.get(url, {timeout:30000});
+  //   	if(result.statusCode==200) {
+  //       	console.log('OK status code 200 on libGetTitleFromUrlAsync');
+  //       	var content =  (result.headers['content-encoding'] === 'gzip')? inflateSync(new Buffer(result.content)) : result.content;
+  //       	var start = content.toLowerCase().indexOf('<title>');
+  //       	var end = content.toLowerCase().indexOf('</title>');
+  //       	var title = content.substring(start + '<title>'.length, end);
+  //       	console.log(content);
+  //       	console.log(start);
+  //       	console.log(end);
+  //       	content.log(title);
+  //       }
+  //       else{
+  //       	console.log("Invalid HTTP status code");
+  //       }
+  		 // HTTP.call( 'GET', url, {}, function( error, response ) {
+     //        if ( error ) {
+     //            console.log( error );
+     //        } else {
+     //            var pg = response.data;
+     //            console.log('Response: ' + pg );
+     //        }
+     //    }); 
+
+ 		HTTP.get(url, { params: {timeout:30000 }},  function(error, response){
+ 			if ( error ) {
+                console.log( error );
+            } else {
+                var pg = response.data;
+                console.log('Response: ' + pg );
+            }
+  		});
+	},
+
 	"submit .js-save-website-form":function(event){
 		// here is an example of how to get the url out of the form:
 		var url = event.target.url.value;

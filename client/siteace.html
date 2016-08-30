@@ -37,7 +37,10 @@
 		<form class="js-save-website-form" data-toggle="validator" role="form">
 		  <div class="form-group">
 		    <label for="url" class="control-label">Site address</label>
-		    <input type="url" class="form-control" id="url" placeholder="http://www.mysite.com" required="true">
+		    <input type="url" class="form-control js-fetch-website-metadata" id="url" placeholder="http://www.mysite.com" required="true">
+		    <a href="#" class="btn btn-default js-fetch-website-metadata">
+				<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+			</a> 
 		  </div>
 		  <div class="form-group">
 		    <label for="title">Title</label>
