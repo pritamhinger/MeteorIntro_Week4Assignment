@@ -37,19 +37,12 @@ Meteor.startup(function () {
     		createdOn:new Date()
     	});
     }
-
-    connectHandler.use(function (req, res, next) {
-        res.setHeader('Strict-Transport-Security', 'max-age=2592000; includeSubDomains'); // 2592000s / 30 days
-        return next();
+    
+    Meteor.methods({
+        getWebsiteData: function (url) {
+            this.unblock();
+            return Meteor.http.call("GET", url, {"npmRequestOptions" : {"gzip" : true}});
+        }
     });
+
   });
-
-WebApp.rawConnectHandlers.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  return next();
-});
-
-WebApp.rawConnectHandlers.use("/public", function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  return next();
-});

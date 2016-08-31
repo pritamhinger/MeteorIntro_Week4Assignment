@@ -111,42 +111,35 @@ Template.website_form.events({
 		var url = $("#url").val();
 		console.log("URL is : " + url);
 		if(url === ""){
-			alert("Enter a URL");
 			return;
 		}
 
-		// var result = HTTP.get(url, {timeout:30000});
-  //   	if(result.statusCode==200) {
-  //       	console.log('OK status code 200 on libGetTitleFromUrlAsync');
-  //       	var content =  (result.headers['content-encoding'] === 'gzip')? inflateSync(new Buffer(result.content)) : result.content;
-  //       	var start = content.toLowerCase().indexOf('<title>');
-  //       	var end = content.toLowerCase().indexOf('</title>');
-  //       	var title = content.substring(start + '<title>'.length, end);
-  //       	console.log(content);
-  //       	console.log(start);
-  //       	console.log(end);
-  //       	content.log(title);
-  //       }
-  //       else{
-  //       	console.log("Invalid HTTP status code");
-  //       }
-  		 // HTTP.call( 'GET', url, {}, function( error, response ) {
-     //        if ( error ) {
-     //            console.log( error );
-     //        } else {
-     //            var pg = response.data;
-     //            console.log('Response: ' + pg );
-     //        }
-     //    }); 
+  		Meteor.call("getWebsiteData", url, function(error, results) {
+  			if (error) {
+  				alert("Something went wrong while getting Title and description of Website. Try entering some other website. [Error :: " + error + "]")
+  				$("#url").val("");
+  				return;
+  			}
 
- 		HTTP.get(url, { params: {timeout:30000 }},  function(error, response){
- 			if ( error ) {
-                console.log( error );
-            } else {
-                var pg = response.data;
-                console.log('Response: ' + pg );
-            }
-  		});
+  			var el = $('<div></div>');
+            el.html(results.content);
+            try{
+            	var title = $('title', el).text();
+            	$("#title").val(title)
+        	}
+        	catch(err){
+        		alert("Unable to fetch title of website. Try entering title manually or search some other website.")
+        	}
+
+        	try{
+            	var description = $('meta[name="description"]', el).attr("content")
+            	$("#description").val(description);
+        	}
+        	catch(err){
+        		alert("Unable to fetch description of website. Try entering description manually or search some other website.")
+        	}
+            
+		});
 	},
 
 	"submit .js-save-website-form":function(event){
