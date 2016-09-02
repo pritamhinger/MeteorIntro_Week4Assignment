@@ -92,7 +92,8 @@ Template.websiteDetail.events({
 			Comments.insert({
 				comment:comment,
 				website_id: websiteId,
-				createdOn:new Date()
+				createdOn:new Date(),
+				user:Meteor.user()._id
 			});
 		}
 		else{
@@ -155,7 +156,8 @@ Template.website_form.events({
     			description:event.target.description.value, 
     			upVotes:0,
     			downVotes:0,
-    			createdOn:new Date()
+    			createdOn:new Date(),
+    			user: Meteor.user()._id
     		});
 		}
 		else{

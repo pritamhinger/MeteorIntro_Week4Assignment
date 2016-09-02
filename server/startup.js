@@ -10,7 +10,8 @@ Meteor.startup(function () {
     		description:"This is where this course was developed.", 
             upVotes:0,
             downVotes:0,
-    		createdOn:new Date()
+    		createdOn:new Date(),
+            user:-1
     	});
     	 Websites.insert({
     		title:"University of London", 
@@ -18,7 +19,8 @@ Meteor.startup(function () {
     		description:"University of London International Programme.", 
             upVotes:0,
             downVotes:0,
-    		createdOn:new Date()
+    		createdOn:new Date(),
+            user:-1
     	});
     	 Websites.insert({
     		title:"Coursera", 
@@ -26,7 +28,8 @@ Meteor.startup(function () {
     		description:"Universal access to the world’s best education.", 
             upVotes:0,
             downVotes:0,
-    		createdOn:new Date()
+    		createdOn:new Date(),
+            user:-1
     	});
     	Websites.insert({
     		title:"Google", 
@@ -34,7 +37,8 @@ Meteor.startup(function () {
     		description:"Popular search engine.", 
             upVotes:0,
             downVotes:0,
-    		createdOn:new Date()
+    		createdOn:new Date(),
+            user:-1
     	});
     }
     
