@@ -30,8 +30,37 @@ Router.route('/website/:_id', function () {
 
 // helper function that returns all available websites
 Template.website_list.helpers({
-	websites:function(){
+	 websites:function(){
 		return Websites.find({},{sort:{upVotes:-1,createdOn:-1}});
+	},
+
+	filteredWebSites:function(){
+			var searchString = Session.get("searchTerm");
+			if (searchString == undefined) {
+				searchString = ""
+			}
+			return Websites.find({'$or':[{ 'title':{'$regex':searchString} },
+  										{ 'url':{'$regex':searchString} },
+  										{ 'description':{'$regex':searchString} }, ]
+									}
+									,{sort:{upVotes:-1,createdOn:-1}});
+	},
+
+	filterActive:function(){
+		console.log("Search term is " + Session.get("searchTerm"))
+		if (Session.get("searchTerm") != ""){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+
+});
+
+Template.website_list.events({
+	"keyup .js-search-term":function(event){
+		Session.set("searchTerm", $("#searchTerm").val());
 	}
 });
 
@@ -41,7 +70,6 @@ Template.comment_list.helpers({
 			var websiteId = Session.get("website_id")
 			console.log("Searching comments for Website : " + websiteId)
 			return Comments.find({website_id:websiteId},{sort:{createdOn:-1}});
-			//return Comments.find();
 		}
 	}
 });

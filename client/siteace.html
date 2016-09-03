@@ -58,10 +58,23 @@
 
 <!-- template that displays several website items -->
 <template name="website_list">
+	<hr>
+	<form class="js-search-form" data-toggle="validator" role="form">
+		<div class="form-group">
+			<label for="searchTerm" class="control-label">Search: </label>
+		    <input type="text" class="form-control js-search-term" id="searchTerm" value="" placeholder="enter search term here.....    It will look search term in url, title and description">
+		</div>
+	</form>
 	<ol>
-	{{#each websites}}
-	{{>website_item}}
-	{{/each}}
+	{{#if filterActive}}
+		{{#each filteredWebSites}}
+			{{>website_item}}
+		{{/each}}
+	{{else }}
+		{{#each websites}}
+			{{>website_item}}	
+		{{/each}}
+	{{/if}}
 	</ol>
 </template>
 
